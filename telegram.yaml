@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: telebot
+  labels:
+    name: telebot
+spec:
+  replicas: 1
+  selector:
+    name: telebot
+  template:
+    metadata:
+      labels:
+        name: telebot
+    spec:
+      containers:
+      - name: telebot
+        image: sybex/telebot-alpine:0.3
+        ports:
+        - containerPort: 80
+          name: telebot
+        env:
+          - name:  TOKEN
+            value: ""
+          - name:  ELASTIC
+            value: ""
+          - name:  ES_INDEX
+            value: ""
+          - name:  GROUPID
+            value: ""
+          - name:  ADMIN
+            value: ""

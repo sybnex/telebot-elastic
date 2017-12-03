@@ -1,0 +1,91 @@
+{
+    "query": {
+        "filtered" : {
+            "query" : {
+                "match_all" : {}
+            },
+            "filter" : {
+                "geo_distance" : {
+                    "distance" : "10km",
+                    "Location" : {
+                        "lat" : 46.9479686
+                        "lon" : 7.4440373
+                    }
+                }
+            }
+        }
+    }
+}    
+
+
+{"query":
+  {"filtered":
+    {"query":
+      {"geo_bounding_box":
+        {"Location":
+          {"bottom_right":
+            {"lat":46.91017109024989,
+             "lon":7.50743865966797},
+             "top_left":
+              {"lat":46.99079175995039,
+               "lon":7.3519134521484375}
+          }
+        }
+      },
+      "filter":
+        {"bool":
+          {"must":[
+            {"range":
+              {"Date":
+                {"gte":1463728638043,
+                 "lte":1463771838043,
+                 "format":"epoch_millis"
+                }
+              }
+            }],"must_not":[]
+          }
+        }
+      }
+  },
+  "size":0,
+  "aggs":
+    {"2":
+      {"date_histogram":
+        {"field":"Date",
+         "interval":"10m",
+         "time_zone":"Europe/Berlin",
+         "min_doc_count":1,
+         "extended_bounds":
+           {"min":1463728638041,"max":1463771838041}
+        },
+        "aggs":
+          {"3":
+            {"terms":
+              {"field":"Portalname",
+               "size":9,
+               "order":{"1":"desc"}
+              },
+              "aggs":
+                {"1":
+                  {"cardinality":
+                    {"field":"Enemy"}
+                  }
+                }
+            }
+          }
+     }
+   }}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
